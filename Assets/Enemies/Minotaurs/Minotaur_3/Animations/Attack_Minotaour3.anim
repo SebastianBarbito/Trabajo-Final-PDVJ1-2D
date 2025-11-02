@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Hurt
+  m_Name: Attack_Minotaour3
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,11 +21,15 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: -2048800907179887802, guid: a8027557134557d4e89eda69999027e4, type: 3}
-    - time: 0.28333333
-      value: {fileID: 490842205202310979, guid: a8027557134557d4e89eda69999027e4, type: 3}
-    - time: 0.56666666
-      value: {fileID: -2048800907179887802, guid: a8027557134557d4e89eda69999027e4, type: 3}
+      value: {fileID: -7008412969330441016, guid: 25b241e819458cc40ac9044614030bc8, type: 3}
+    - time: 0.21666667
+      value: {fileID: -7763475090823894447, guid: 25b241e819458cc40ac9044614030bc8, type: 3}
+    - time: 0.43333334
+      value: {fileID: 302641331129538988, guid: 25b241e819458cc40ac9044614030bc8, type: 3}
+    - time: 0.6166667
+      value: {fileID: -6329420634031446844, guid: 25b241e819458cc40ac9044614030bc8, type: 3}
+    - time: 0.8333333
+      value: {fileID: -7008412969330441016, guid: 25b241e819458cc40ac9044614030bc8, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -48,15 +52,17 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: -2048800907179887802, guid: a8027557134557d4e89eda69999027e4, type: 3}
-    - {fileID: 490842205202310979, guid: a8027557134557d4e89eda69999027e4, type: 3}
-    - {fileID: -2048800907179887802, guid: a8027557134557d4e89eda69999027e4, type: 3}
+    - {fileID: -7008412969330441016, guid: 25b241e819458cc40ac9044614030bc8, type: 3}
+    - {fileID: -7763475090823894447, guid: 25b241e819458cc40ac9044614030bc8, type: 3}
+    - {fileID: 302641331129538988, guid: 25b241e819458cc40ac9044614030bc8, type: 3}
+    - {fileID: -6329420634031446844, guid: 25b241e819458cc40ac9044614030bc8, type: 3}
+    - {fileID: -7008412969330441016, guid: 25b241e819458cc40ac9044614030bc8, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.5833333
+    m_StopTime: 0.84999996
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -75,32 +81,4 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events:
-  - time: 0
-    functionName: 
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0
-    functionName: 
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0
-    functionName: 
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.5833333
-    functionName: DesactivaDanio
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
+  m_Events: []
