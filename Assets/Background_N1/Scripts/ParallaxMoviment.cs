@@ -34,20 +34,22 @@ public class ParallaxMoviment : MonoBehaviour
         BackSpeedCalculate(backCount);
     }
 
-    void BackSpeedCalculate (int  backCount)
+    void BackSpeedCalculate(int backCount)
     {
-        for (int i = 0; i <= backCount; i++)
+        for (int i = 0; i < backCount; i++) // antes era <=
         {
             if ((backgrounds[i].transform.position.z - cam.position.z) > farthestBack)
             {
                 farthestBack = backgrounds[i].transform.position.z - cam.position.z;
             }
         }
-        for (int i = 0; i <= backCount; i++)
+
+        for (int i = 0; i < backCount; i++) // antes era <=
         {
-            backSpeed[i] = 1 - (backgrounds[i].transform.position.z  - cam.position.z) / farthestBack;
+            backSpeed[i] = 1 - (backgrounds[i].transform.position.z - cam.position.z) / farthestBack;
         }
     }
+
 
     private void LateUpdate()
     {

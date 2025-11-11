@@ -9,7 +9,12 @@ public class Menu : MonoBehaviour
     }
     public void Salir()
     {
-        Debug.Log("Saliednod el Juego ...");
+        Debug.Log("Saliendo el Juego ...");
         Application.Quit();
     }
+    public void Niveles()
+    {
+        SceneManager.LoadScene("Selector_Niveles");
+    }
+
 }

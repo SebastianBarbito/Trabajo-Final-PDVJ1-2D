@@ -14,6 +14,10 @@ public class EnemyMovement : MonoBehaviour
     private Vector2 movement;
     private bool ataqueM_01;
     private bool enMovimiento;
+
+    public float patrolTime = 3f; // Tiempo que camina antes de cambiar de dirección
+    private float patrolTimer;
+
     private bool muerto;
     private bool recibiendoDanio;
     private bool playerVivo;
@@ -75,8 +79,17 @@ public class EnemyMovement : MonoBehaviour
         }
         else
         {
-            movement = Vector2.zero;
-            enMovimiento = false;
+            patrolTimer -= Time.deltaTime;
+            enMovimiento = true;
+            if (patrolTimer <= 0)
+            {
+                // Cambia de dirección (invierte la escala)
+                transform.localScale = new Vector3(transform.localScale.x * -1, 1, 1);
+                // Reinicia el temporizador
+                patrolTimer = patrolTime;
+            }
+            // Moverse en la dirección actual
+            movement = new Vector2(transform.localScale.x, 0);
         }
 
         if (!recibiendoDanio)
