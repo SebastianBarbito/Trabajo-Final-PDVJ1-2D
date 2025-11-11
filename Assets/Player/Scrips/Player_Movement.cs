@@ -1,12 +1,22 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class Player_Movement : MonoBehaviour
 {
+
+    private static Player_Movement instance;
+    public string[] levelScenes = { "Nivel_1", "Jefe_Nivel01", "Nivel_2", "Nivel_3" };
+    
+
     public float velocidad = 5f;
-    public float vida = 3;
+
+    public const float MAX_VIDA = 5f;
+    public static float vidaActual = MAX_VIDA;
 
     public float fuerzaSalto = 10f;
     public float fuerzaRebote = 5f;
+    public float knockbackDuration = 0.2f;
     public float longitudRaycast = 1.0f;
     public LayerMask capSuelo;
 
@@ -15,8 +25,30 @@ public class Player_Movement : MonoBehaviour
     private bool atacando;
     private bool atacando_02;
     public bool muerto;
+    public bool defensa;
     private Rigidbody2D rb;
     public Animator animator;
+
+
+    void Awake()
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        bool isLevelScene = System.Array.IndexOf(levelScenes, currentSceneName) > -1;
+
+        if (isLevelScene)
+        {
+            if (instance == null)
+            {
+                instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                // Destruye el objeto duplicado, el persistente (con la vida correcta) sobrevive
+                Destroy(gameObject);
+            }
+        }
+    }
 
     void Start()
     {
@@ -29,7 +61,7 @@ public class Player_Movement : MonoBehaviour
         if(! muerto)
         {
 
-            if (!atacando || atacando_02)
+            if (!atacando && !atacando_02 && !defensa)
             {
                 Movimiento();
 
@@ -43,23 +75,19 @@ public class Player_Movement : MonoBehaviour
 
             }
 
-            if (Input.GetKeyDown(KeyCode.K))
+            if (Input.GetKeyDown(KeyCode.K) && !atacando && enSuelo)
             {
                 Atacando();
             }
 
-            if (Input.GetKeyDown(KeyCode.K) && !atacando_02 && enSuelo)
-            {
-                Atacando();
-            }
-
-            if(Input.GetKeyDown(KeyCode.L))
+            
+            if (Input.GetKeyDown(KeyCode.L) && !atacando_02 && enSuelo)
             {
                 Atacando_02();
             }
-            if (Input.GetKeyDown(KeyCode.L) && !atacando && enSuelo)
+            if (Input.GetKeyDown(KeyCode.J) && !defensa && enSuelo)
             {
-                Atacando_02();
+                Defensa();
             }
         }
         
@@ -97,44 +125,77 @@ public class Player_Movement : MonoBehaviour
         animator.SetBool("Atacando", atacando);
         animator.SetBool("muerto", muerto);
         animator.SetBool("Atacando_02", atacando_02);
+        animator.SetBool("Defensa", defensa);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Hacha"))
+        if (collision.CompareTag("EnemyAttack"))
         {
-            float fuerzaExtra = 2f; //  más alto = más empuje
-            Vector2 direccion = new Vector2(collision.gameObject.transform.position.x, 0);
-            fuerzaRebote *= fuerzaExtra;
-            RecibeDanio(direccion, 2);
-            fuerzaRebote /= fuerzaExtra; //  vuelve al valor normal
-        }
+            HandleCollisionDamage(collision.gameObject.transform.position, 2);
 
+        }
     }
 
     public void RecibeDanio(Vector2 direccion, int cantDanio)
-    {
-        if(!recibiendoDanio)
+        {
+
+        if (defensa)
+        {
+            Debug.Log("¡Defensa Exitosa! Aplicando rebote.");
+            recibiendoDanio = false;
+            // 1. Aplica la fuerza de rebote
+            Vector2 rebote = new Vector2(transform.position.x - direccion.x, 0).normalized;
+            float fuerzaReboteDefensa = fuerzaRebote * 2f;
+            rb.AddForce(rebote * fuerzaReboteDefensa, ForceMode2D.Impulse);
+
+            // 2. Bloquea el movimiento manual durante el rebote
+            // Usamos la Coroutine para gestionar el tiempo de inmovilidad
+            StartCoroutine(BlockMovement(knockbackDuration));
+
+            return;
+        }
+
+        if (!recibiendoDanio)
         {
             recibiendoDanio = true;
-            vida -= cantDanio;
-            if (vida <=0)
+            vidaActual -= cantDanio;
+            if (vidaActual <=0)
             {
                 muerto = true;
+                if (GameManager.Instance != null)
+                {
+                    GameManager.Instance.GameOver();
+                }
             }
             if (!muerto)
             {
                 Vector2 rebote = new Vector2(transform.position.x - direccion.x, 1).normalized;
                 rb.AddForce(rebote * fuerzaRebote, ForceMode2D.Impulse);
+
+                StartCoroutine(BlockMovement(knockbackDuration));
             }
             
         }
         
     }
 
+    IEnumerator BlockMovement(float duration)
+    {
+        // Bloquea el control de movimiento y la aplicación de daño
+        recibiendoDanio = true;
+
+        // Espera el tiempo de duración del rebote
+        yield return new WaitForSeconds(duration);
+
+        // Libera el control y detiene cualquier velocidad residual
+        recibiendoDanio = false;
+        rb.linearVelocity = Vector2.zero;
+    }
+
     public void DesactivaDanio()
     {
         recibiendoDanio = false;
-        rb.linearVelocity = Vector2.zero;
+        //rb.linearVelocity = Vector2.zero;
     }
 
     public void Atacando()
@@ -155,6 +216,36 @@ public class Player_Movement : MonoBehaviour
     public void DesactivaAtaque_02()
     {
         atacando_02 = false;
+    }
+
+    public void Defensa()
+    {
+        defensa = true;
+        DesactivaDanio();
+    }
+
+    public void DesactivaDefensa()
+    {
+        defensa = false;
+    }
+
+    private void HandleCollisionDamage(Vector3 collisionPosition, int damageAmount)
+    {
+        if (defensa)
+        {
+            // Si hay defensa, el RecibeDanio() se encargará del rebote y de NO aplicar daño.
+            // No salimos con 'return' aquí, sino que pasamos el control a RecibeDanio.
+        }
+
+        float fuerzaExtra = 2f; // Puedes usar esta variable para modificar la fuerza de rebote
+
+        Vector2 direccion = new Vector2(collisionPosition.x, 0);
+
+        fuerzaRebote *= fuerzaExtra;
+        // rebote por defensa O daño por golpe.
+        RecibeDanio(direccion, damageAmount);
+        // Volvemos al valor normal
+        fuerzaRebote /= fuerzaExtra;
     }
     void OnDrawGizmos()
     {

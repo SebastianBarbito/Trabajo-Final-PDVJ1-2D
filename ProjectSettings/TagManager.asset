@@ -6,7 +6,8 @@ TagManager:
   tags:
   - Espada_01
   - Espada_02
-  - Hacha
+  - EnemyAttack
+  - Enemy
   layers:
   - Default
   - TransparentFX

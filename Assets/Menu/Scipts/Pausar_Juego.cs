@@ -1,5 +1,6 @@
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Pausar_Juego : MonoBehaviour
 {
@@ -33,5 +34,15 @@ public class Pausar_Juego : MonoBehaviour
         juegoPausado=true;
     }
 
+    public void MenuPrincipal()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("Menu");
+    }
 
+    public void SalirJuego()
+    {
+        Debug.Log("Saliendo el Juego ...");
+        Application.Quit();
+    }
 }
