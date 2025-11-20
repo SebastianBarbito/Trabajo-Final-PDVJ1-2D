@@ -10,7 +10,7 @@ public class EnemySpawner : MonoBehaviour
     public Vector2 spawnAreaSize = new Vector2(20f, 5f);
 
     // Número máximo de enemigos que puede haber en el nivel a la vez
-    public int maxEnemies = 5;
+    public int maxEnemies = 3;
 
     // Intervalo de tiempo para intentar generar un nuevo enemigo
     public float spawnInterval = 3f;

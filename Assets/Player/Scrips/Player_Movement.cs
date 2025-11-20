@@ -4,14 +4,16 @@ using System.Collections;
 
 public class Player_Movement : MonoBehaviour
 {
+    private bool petrificado = false;
+    public bool puedeMover = true;
+    public bool puedeAtacar = true;
+    private SpriteRenderer sr;
+    private Color colorOriginal;
 
-    private static Player_Movement instance;
-    public string[] levelScenes = { "Nivel_1", "Jefe_Nivel01", "Nivel_2", "Nivel_3" };
-    
 
     public float velocidad = 5f;
 
-    public const float MAX_VIDA = 5f;
+    public const float MAX_VIDA = 7f;
     public static float vidaActual = MAX_VIDA;
 
     public float fuerzaSalto = 10f;
@@ -29,30 +31,12 @@ public class Player_Movement : MonoBehaviour
     private Rigidbody2D rb;
     public Animator animator;
 
-
-    void Awake()
-    {
-        string currentSceneName = SceneManager.GetActiveScene().name;
-        bool isLevelScene = System.Array.IndexOf(levelScenes, currentSceneName) > -1;
-
-        if (isLevelScene)
-        {
-            if (instance == null)
-            {
-                instance = this;
-                DontDestroyOnLoad(gameObject);
-            }
-            else
-            {
-                // Destruye el objeto duplicado, el persistente (con la vida correcta) sobrevive
-                Destroy(gameObject);
-            }
-        }
-    }
-
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        vidaActual = GameManager.Instance.vidaJugador;
+        sr = GetComponent<SpriteRenderer>();
+        colorOriginal = sr.color;
     }
 
     void Update()
@@ -60,9 +44,12 @@ public class Player_Movement : MonoBehaviour
 
         if(! muerto)
         {
-
+            
             if (!atacando && !atacando_02 && !defensa)
             {
+                if (!puedeMover || petrificado)
+                    return;
+
                 Movimiento();
 
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, longitudRaycast, capSuelo);
@@ -127,18 +114,19 @@ public class Player_Movement : MonoBehaviour
         animator.SetBool("Atacando_02", atacando_02);
         animator.SetBool("Defensa", defensa);
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("EnemyAttack"))
         {
-            HandleCollisionDamage(collision.gameObject.transform.position, 2);
-
+            Minotaur_Jefe enemigoJefe = collision.GetComponentInParent<Minotaur_Jefe>();
+            if (enemigoJefe != null)
+                HandleCollisionDamage(collision.gameObject.transform.position, enemigoJefe.danioHacha);
         }
     }
 
     public void RecibeDanio(Vector2 direccion, int cantDanio)
-        {
-
+    {
         if (defensa)
         {
             Debug.Log("¡Defensa Exitosa! Aplicando rebote.");
@@ -151,7 +139,6 @@ public class Player_Movement : MonoBehaviour
             // 2. Bloquea el movimiento manual durante el rebote
             // Usamos la Coroutine para gestionar el tiempo de inmovilidad
             StartCoroutine(BlockMovement(knockbackDuration));
-
             return;
         }
 
@@ -159,25 +146,23 @@ public class Player_Movement : MonoBehaviour
         {
             recibiendoDanio = true;
             vidaActual -= cantDanio;
-            if (vidaActual <=0)
+
+            if (vidaActual <= 0)
             {
                 muerto = true;
-                if (GameManager.Instance != null)
-                {
-                    GameManager.Instance.GameOver();
-                }
+                
+                StartCoroutine(RetrasoGameOver(3f));
             }
+
             if (!muerto)
             {
-                Vector2 rebote = new Vector2(transform.position.x - direccion.x, 1).normalized;
+                Vector2 rebote = new Vector2(direccion.x * 2, 1).normalized;
                 rb.AddForce(rebote * fuerzaRebote, ForceMode2D.Impulse);
-
                 StartCoroutine(BlockMovement(knockbackDuration));
             }
-            
         }
-        
     }
+
 
     IEnumerator BlockMovement(float duration)
     {
@@ -191,6 +176,39 @@ public class Player_Movement : MonoBehaviour
         recibiendoDanio = false;
         rb.linearVelocity = Vector2.zero;
     }
+    public void ActivarPetrificacion(float duracion)
+    {
+        if (petrificado) return;
+
+        petrificado = true;
+
+        // Cambiar apariencia a gris piedra
+        sr.color = new Color(0.6f, 0.6f, 0.6f, 1f);
+
+        // congelar movimiento y animaciones
+        rb.linearVelocity = Vector2.zero;
+
+        // bloquear acciones
+        puedeMover = true;
+        puedeAtacar = true;
+
+        // iniciar rutina de recuperación
+        StartCoroutine(RecuperarPetrificacion(duracion));
+    }
+    private IEnumerator RecuperarPetrificacion(float duracion)
+    {
+        yield return new WaitForSeconds(duracion);
+
+        petrificado = false;
+
+        // volver a color normal
+        sr.color = colorOriginal;
+
+        // habilitar movimiento y ataque
+        puedeMover = true;
+        puedeAtacar = true;
+    }
+
 
     public void DesactivaDanio()
     {
@@ -200,6 +218,8 @@ public class Player_Movement : MonoBehaviour
 
     public void Atacando()
     {
+        if (!puedeAtacar || petrificado)
+            return;
         atacando = true;
     }
 
@@ -210,6 +230,9 @@ public class Player_Movement : MonoBehaviour
 
     public void Atacando_02()
     {
+        if (!puedeAtacar || petrificado)
+            return;
+
         atacando_02 = true;
     }
 
@@ -247,6 +270,17 @@ public class Player_Movement : MonoBehaviour
         // Volvemos al valor normal
         fuerzaRebote /= fuerzaExtra;
     }
+
+    private IEnumerator RetrasoGameOver(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.GameOver();
+        }
+    }
+
     void OnDrawGizmos()
     {
         Gizmos.color = Color.green;

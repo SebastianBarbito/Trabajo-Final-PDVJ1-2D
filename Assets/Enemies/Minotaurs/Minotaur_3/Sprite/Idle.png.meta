@@ -130,12 +130,12 @@ TextureImporter:
       name: Idle_0
       rect:
         serializedVersion: 2
-        x: 36
+        x: 37
         y: 0
-        width: 56
-        height: 94
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 54
+        height: 93
+      alignment: 9
+      pivot: {x: 0.5172091, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -152,12 +152,12 @@ TextureImporter:
       name: Idle_1
       rect:
         serializedVersion: 2
-        x: 161
+        x: 162
         y: 0
-        width: 59
-        height: 94
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 57
+        height: 93
+      alignment: 9
+      pivot: {x: 0.5476875, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -174,12 +174,12 @@ TextureImporter:
       name: Idle_2
       rect:
         serializedVersion: 2
-        x: 285
+        x: 286
         y: 0
-        width: 63
-        height: 94
+        width: 61
+        height: 93
       alignment: 9
-      pivot: {x: 0.56422496, y: 0.49999988}
+      pivot: {x: 0.5890578, y: 0.49999997}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -196,12 +196,12 @@ TextureImporter:
       name: Idle_3
       rect:
         serializedVersion: 2
-        x: 403
+        x: 404
         y: 0
-        width: 73
-        height: 94
+        width: 71
+        height: 93
       alignment: 9
-      pivot: {x: 0.59295654, y: 0.49999985}
+      pivot: {x: 0.6530147, y: 0.49999997}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -218,12 +218,12 @@ TextureImporter:
       name: Idle_4
       rect:
         serializedVersion: 2
-        x: 531
+        x: 532
         y: 0
-        width: 73
-        height: 94
+        width: 71
+        height: 93
       alignment: 9
-      pivot: {x: 0.5619708, y: 0.49999985}
+      pivot: {x: 0.6530134, y: 0.49999997}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -240,12 +240,12 @@ TextureImporter:
       name: Idle_5
       rect:
         serializedVersion: 2
-        x: 665
+        x: 666
         y: 0
-        width: 67
-        height: 94
+        width: 65
+        height: 93
       alignment: 9
-      pivot: {x: 0.5613804, y: 0.50000006}
+      pivot: {x: 0.6250939, y: 0.49999997}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -262,12 +262,12 @@ TextureImporter:
       name: Idle_6
       rect:
         serializedVersion: 2
-        x: 803
+        x: 804
         y: 0
-        width: 57
-        height: 94
+        width: 55
+        height: 93
       alignment: 9
-      pivot: {x: 0.48496714, y: 0.51932317}
+      pivot: {x: 0.5411144, y: 0.4952872}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -284,12 +284,12 @@ TextureImporter:
       name: Idle_7
       rect:
         serializedVersion: 2
-        x: 932
+        x: 933
         y: 0
-        width: 56
-        height: 94
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 54
+        height: 93
+      alignment: 9
+      pivot: {x: 0.541557, y: 0.49999997}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -306,12 +306,12 @@ TextureImporter:
       name: Idle_8
       rect:
         serializedVersion: 2
-        x: 1060
+        x: 1061
         y: 0
-        width: 63
-        height: 94
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 61
+        height: 93
+      alignment: 9
+      pivot: {x: 0.46207616, y: 0.5047128}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -328,12 +328,12 @@ TextureImporter:
       name: Idle_9
       rect:
         serializedVersion: 2
-        x: 1188
+        x: 1189
         y: 0
-        width: 56
-        height: 94
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 54
+        height: 93
+      alignment: 9
+      pivot: {x: 0.5172091, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -358,7 +358,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5172091126441956,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":9,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       Idle_0: 4723107735738678597
       Idle_1: -7385789195546760866

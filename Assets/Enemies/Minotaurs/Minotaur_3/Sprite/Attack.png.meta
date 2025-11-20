@@ -112,12 +112,12 @@ TextureImporter:
       name: Attack_0
       rect:
         serializedVersion: 2
-        x: 5
+        x: 6
         y: 0
-        width: 96
-        height: 83
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 94
+        height: 82
+      alignment: 9
+      pivot: {x: 0.5, y: 0.57}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -134,12 +134,12 @@ TextureImporter:
       name: Attack_1
       rect:
         serializedVersion: 2
-        x: 131
+        x: 132
         y: 0
-        width: 96
-        height: 83
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 94
+        height: 82
+      alignment: 9
+      pivot: {x: 0.51614267, y: 0.57}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -156,12 +156,12 @@ TextureImporter:
       name: Attack_2
       rect:
         serializedVersion: 2
-        x: 266
+        x: 267
         y: 0
-        width: 106
-        height: 83
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 104
+        height: 82
+      alignment: 9
+      pivot: {x: 0.4343435, y: 0.57}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -178,12 +178,12 @@ TextureImporter:
       name: Attack_3
       rect:
         serializedVersion: 2
-        x: 397
+        x: 398
         y: 0
-        width: 111
-        height: 83
+        width: 109
+        height: 82
       alignment: 9
-      pivot: {x: 0.45574126, y: 0.5000001}
+      pivot: {x: 0.40951285, y: 0.57}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -208,7 +208,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5699999928474426},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":9,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       Attack_0: -7008412969330441016
       Attack_1: -7763475090823894447

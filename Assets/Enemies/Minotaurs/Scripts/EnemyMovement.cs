@@ -9,6 +9,7 @@ public class EnemyMovement : MonoBehaviour
     public float speed = 2;
     public float fuerzaRebote = 5f;
     public int vida = 4;
+    public int danioHacha = 2;
 
     private Rigidbody2D rb;
     private Vector2 movement;
@@ -25,6 +26,13 @@ public class EnemyMovement : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        if (player == null)
+        {
+            GameObject p = GameObject.FindGameObjectWithTag("Player");
+            if (p != null)
+                player = p.transform;
+        }
+
         playerVivo = true;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -140,7 +148,7 @@ public class EnemyMovement : MonoBehaviour
         {
             Vector2 direccionDanio = new Vector2(collision.gameObject.transform.position.x +3, 0);
 
-            RecibeDanio(direccionDanio, 1);
+            RecibeDanio(direccionDanio, 2);
         }
 
         if (collision.CompareTag("Player"))
