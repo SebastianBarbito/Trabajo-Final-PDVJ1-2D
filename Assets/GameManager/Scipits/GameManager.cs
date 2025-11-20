@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour  
 {
     public static GameManager Instance;
+    public int vidaJugador = 7;
+    public int vidaMaxima = 7;
 
     public GameObject gameOverPanel;
     public TextMeshProUGUI gameOverText;
