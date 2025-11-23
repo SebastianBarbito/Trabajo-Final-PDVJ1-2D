@@ -2,18 +2,32 @@ using UnityEngine;
 
 public class Jefe_Gorgona : MonoBehaviour
 {
+    [Header("FASE 2")]
+    public bool enFase2 = false;
+    public float multiplicadorTamano = 1.2f;
+    public int bonusDanioFase2 = 2;
+    public float bonusVelocidadFase2 = 1f;
+
+    [Header("INVOCACION AL MORIR")]
+    public GameObject gorgonaPrefab1;
+    public GameObject gorgonaPrefab2;
+    public Transform spawn1;
+    public Transform spawn2;
+
+
     public Transform player;
     public float detectionRadious = 0.5f;
     public float ataqueRadios = 2f;
     public float pretrificarRadios = 3f;
 
-    public float tiempoEntreEspecial = 8f;  // cada cuántos segundos intenta petrificar
+    public float tiempoEntreEspecial = 4f;  // cada cuántos segundos intenta petrificar
     private float temporizadorEspecial;
 
     public float speed = 2;
     private float originalSpeed;
     public float fuerzaRebote = 5f;
-    public int vida = 4;
+    public int vidaMaxima;
+    public int vida = 15;
     public int danio;
 
     private Rigidbody2D rb;
@@ -34,6 +48,7 @@ public class Jefe_Gorgona : MonoBehaviour
 
     void Start()
     {
+        vidaMaxima = vida;
         temporizadorEspecial = tiempoEntreEspecial;
 
         originalSpeed = speed;
@@ -210,17 +225,16 @@ public class Jefe_Gorgona : MonoBehaviour
     {
         if (collision.CompareTag("Espada_01"))
         {
-            Vector2 direccionDanio = new Vector2(collision.gameObject.transform.position.x, 0);
-
-            RecibeDanio(direccionDanio, 2);
+            Vector2 direccionDanio = (transform.position - collision.transform.position).normalized;
+            RecibeDanio(direccionDanio, 2, 4f);   // Rebote débil
         }
         if (collision.CompareTag("Espada_02"))
         {
-            Vector2 direccionDanio = new Vector2(collision.gameObject.transform.position.x + 1, 0);
-
-            RecibeDanio(direccionDanio, 3);
+            Vector2 direccionDanio = (transform.position - collision.transform.position).normalized;
+            RecibeDanio(direccionDanio, 3, 2f);   // Rebote más fuerte
         }
     }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -248,14 +262,17 @@ public class Jefe_Gorgona : MonoBehaviour
     }
 
 
-    public void RecibeDanio(Vector2 direccion, int cantDanio)
+    public void RecibeDanio(Vector2 direccion, int cantDanio, float fuerzaRebotePersonalizada)
     {
         if (recibeDanio) return;
+
+        if (enFase2 == true)
+            cantDanio = Mathf.RoundToInt(cantDanio * 0.8f); // Recibe un poco menos
 
         vida -= cantDanio;
         recibeDanio = true;
 
-        // Apagamos cualquier animación activa
+
         ataque1 = false;
         ataque2 = false;
         ataqueEspecial = false;
@@ -270,6 +287,11 @@ public class Jefe_Gorgona : MonoBehaviour
         animator.SetBool("ataqueEsp_JefeGor", false);
         animator.SetBool("recibeDanio", true);
 
+        if (!enFase2 && vida <= vidaMaxima / 2)
+        {
+            ActivarFase2();
+        }
+
         if (vida <= 0)
         {
             muerto = true;
@@ -277,8 +299,8 @@ public class Jefe_Gorgona : MonoBehaviour
         }
         else
         {
-            Vector2 rebote = new Vector2(transform.position.x - direccion.x, 1).normalized;
-            rb.AddForce(rebote * fuerzaRebote, ForceMode2D.Impulse);
+            Vector2 rebote = new Vector2(direccion.x, 0).normalized;
+            rb.AddForce(rebote * fuerzaRebotePersonalizada, ForceMode2D.Impulse);
         }
     }
 
@@ -288,6 +310,23 @@ public class Jefe_Gorgona : MonoBehaviour
         recibeDanio = false;
         rb.linearVelocity = Vector2.zero;
     }
+
+    public void ActivarFase2()
+    {
+        enFase2 = true;
+
+        // Aumenta tamaño
+        transform.localScale *= multiplicadorTamano;
+
+        // Aumenta daño
+        danio += bonusDanioFase2;
+
+        // Aumenta velocidad
+        speed += bonusVelocidadFase2;
+
+        Debug.Log("FASE 2 ACTIVADA");
+    }
+
 
     private void EjecutarAtaqueAleatorio()
     {
@@ -310,6 +349,12 @@ public class Jefe_Gorgona : MonoBehaviour
 
     public void EmilinarCuerpo()
     {
+        if (gorgonaPrefab1 != null && spawn1 != null)
+            Instantiate(gorgonaPrefab1, spawn1.position, Quaternion.identity);
+
+        if (gorgonaPrefab2 != null && spawn2 != null)
+            Instantiate(gorgonaPrefab2, spawn2.position, Quaternion.identity);
+
         Destroy(gameObject);
     }
 

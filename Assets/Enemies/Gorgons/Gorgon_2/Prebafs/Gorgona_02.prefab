@@ -216,7 +216,7 @@ Transform:
   m_GameObject: {fileID: 5863466609826483071}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 44.51, y: 0.17, z: 0}
+  m_LocalPosition: {x: 39.86, y: 1.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -354,7 +354,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!95 &8585717865588382099
 Animator:
   serializedVersion: 7
@@ -393,7 +393,7 @@ MonoBehaviour:
   detectionRadious: 7.55
   ataqueRadios: 2.62
   speed: 2.08
-  fuerzaRebote: 5
-  vida: 10
+  fuerzaRebote: 3.03
+  vida: 12
   danio: 1
   patrolTime: 2.72

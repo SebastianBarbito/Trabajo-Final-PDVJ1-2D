@@ -8,7 +8,7 @@ public class Minotaur_Jefe : MonoBehaviour
     public float ataqueRadios = 2f;            // AREA para atacar
     public float speed = 2;
     public float fuerzaRebote = 5f;
-    public int danioHacha = 2;                 // daño del hacha
+    public int danioHacha = 2;               // daño que hace con el hacha
 
     public int vida = 10;                      // vida total
 
@@ -124,7 +124,7 @@ public class Minotaur_Jefe : MonoBehaviour
             RecibeDanio(collision.transform.position, 1);
 
         if (collision.CompareTag("Espada_02"))
-            RecibeDanio(collision.transform.position + new Vector3(3, 0), 1);
+            RecibeDanio(collision.transform.position, 2);
 
         if (collision.CompareTag("Player"))
         {
@@ -197,7 +197,6 @@ public class Minotaur_Jefe : MonoBehaviour
             speed *= 0.6f;
             danioHacha += 2;
             vida += 2;
-
             // rojo más intenso
 
 
