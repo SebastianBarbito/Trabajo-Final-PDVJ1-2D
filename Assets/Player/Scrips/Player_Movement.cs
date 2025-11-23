@@ -5,8 +5,6 @@ using System.Collections;
 public class Player_Movement : MonoBehaviour
 {
     private bool petrificado = false;
-    public bool puedeMover = true;
-    public bool puedeAtacar = true;
     private SpriteRenderer sr;
     private Color colorOriginal;
 
@@ -45,10 +43,8 @@ public class Player_Movement : MonoBehaviour
         if(! muerto)
         {
             
-            if (!atacando && !atacando_02 && !defensa)
+            if (!atacando && !atacando_02 && !defensa && !petrificado)
             {
-                if (!puedeMover || petrificado)
-                    return;
 
                 Movimiento();
 
@@ -188,9 +184,9 @@ public class Player_Movement : MonoBehaviour
         // congelar movimiento y animaciones
         rb.linearVelocity = Vector2.zero;
 
-        // bloquear acciones
-        puedeMover = true;
-        puedeAtacar = true;
+        DesactivaAtaque();
+        DesactivaAtaque_02();
+
 
         // iniciar rutina de recuperación
         StartCoroutine(RecuperarPetrificacion(duracion));
@@ -204,9 +200,6 @@ public class Player_Movement : MonoBehaviour
         // volver a color normal
         sr.color = colorOriginal;
 
-        // habilitar movimiento y ataque
-        puedeMover = true;
-        puedeAtacar = true;
     }
 
 
@@ -218,9 +211,11 @@ public class Player_Movement : MonoBehaviour
 
     public void Atacando()
     {
-        if (!puedeAtacar || petrificado)
-            return;
-        atacando = true;
+        if (!petrificado)
+        {
+            atacando = true;
+        }
+      
     }
 
     public void DesactivaAtaque()
@@ -230,10 +225,9 @@ public class Player_Movement : MonoBehaviour
 
     public void Atacando_02()
     {
-        if (!puedeAtacar || petrificado)
-            return;
-
+        if (!petrificado) { 
         atacando_02 = true;
+        }
     }
 
     public void DesactivaAtaque_02()
@@ -254,11 +248,6 @@ public class Player_Movement : MonoBehaviour
 
     private void HandleCollisionDamage(Vector3 collisionPosition, int damageAmount)
     {
-        if (defensa)
-        {
-            // Si hay defensa, el RecibeDanio() se encargará del rebote y de NO aplicar daño.
-            // No salimos con 'return' aquí, sino que pasamos el control a RecibeDanio.
-        }
 
         float fuerzaExtra = 2f; // Puedes usar esta variable para modificar la fuerza de rebote
 

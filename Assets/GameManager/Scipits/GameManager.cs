@@ -69,10 +69,6 @@ public class GameManager : MonoBehaviour
         { 
             gameOverPanel.SetActive(true);
         }
-        if (gameOverText != null)
-        {
-            gameOverText.text = "Presiona\n\nR - Reiniciar\nEsc - Menu Principal";
-        }
 
     }
     public void ReiniciarEscena()

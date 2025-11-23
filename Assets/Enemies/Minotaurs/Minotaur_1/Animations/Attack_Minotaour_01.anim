@@ -207,13 +207,13 @@ AnimationClip:
       value: {fileID: -7008412969330441016, guid: 9e9dde3a568c57642bde824c55cb6147, type: 3}
     - time: 0.16666667
       value: {fileID: -7763475090823894447, guid: 9e9dde3a568c57642bde824c55cb6147, type: 3}
-    - time: 0.33333334
+    - time: 0.31666666
       value: {fileID: 302641331129538988, guid: 9e9dde3a568c57642bde824c55cb6147, type: 3}
-    - time: 0.5
+    - time: 0.48333332
       value: {fileID: -6329420634031446844, guid: 9e9dde3a568c57642bde824c55cb6147, type: 3}
-    - time: 0.6666667
+    - time: 0.6333333
       value: {fileID: 221524225039350300, guid: 9e9dde3a568c57642bde824c55cb6147, type: 3}
-    - time: 0.8333333
+    - time: 0.8
       value: {fileID: -7008412969330441016, guid: 9e9dde3a568c57642bde824c55cb6147, type: 3}
     attribute: m_Sprite
     path: 
@@ -487,7 +487,7 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.85
+  - time: 0.8
     functionName: finAtaque
     data: 
     objectReferenceParameter: {fileID: 0}

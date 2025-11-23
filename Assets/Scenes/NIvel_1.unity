@@ -1987,6 +1987,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f89f929233621e49af90bda9661d67a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player_Movement
+  puedeMover: 1
+  puedeAtacar: 1
   velocidad: 5
   fuerzaSalto: 7
   fuerzaRebote: 2
@@ -18746,8 +18748,8 @@ Tilemap:
   - first: {x: 1, y: 23, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 59
-      m_TileSpriteIndex: 34
+      m_TileIndex: 34
+      m_TileSpriteIndex: 30
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -18756,8 +18758,8 @@ Tilemap:
   - first: {x: 2, y: 23, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 59
-      m_TileSpriteIndex: 34
+      m_TileIndex: 34
+      m_TileSpriteIndex: 30
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -20156,8 +20158,8 @@ Tilemap:
   - first: {x: 3, y: 24, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 17
-      m_TileSpriteIndex: 18
+      m_TileIndex: 0
+      m_TileSpriteIndex: 0
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -30835,7 +30837,7 @@ Tilemap:
       m_AllTileFlags: 1073741825
   m_AnimatedTiles: {}
   m_TileAssetArray:
-  - m_RefCount: 22
+  - m_RefCount: 23
     m_Data: {fileID: 11400000, guid: 55643bba70fb7bb46973455b9fc3ec2f, type: 2}
   - m_RefCount: 16
     m_Data: {fileID: 11400000, guid: b8cd9410cc4858544a5786adcb7c57b8, type: 2}
@@ -30869,7 +30871,7 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: f9be50849c1fbc143925c89e3b202aec, type: 2}
   - m_RefCount: 40
     m_Data: {fileID: 11400000, guid: c30dff260c9d0e942bdd1f9783732860, type: 2}
-  - m_RefCount: 43
+  - m_RefCount: 42
     m_Data: {fileID: 11400000, guid: 36d22a7c50a1722459ed52c399332cb9, type: 2}
   - m_RefCount: 99
     m_Data: {fileID: 11400000, guid: bbaf2e23f93876345aef862ea4af5dde, type: 2}
@@ -30903,8 +30905,8 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 2
+    m_Data: {fileID: 11400000, guid: 956e4d09f8149ef49bfa8c54329eb99f, type: 2}
   - m_RefCount: 5
     m_Data: {fileID: 11400000, guid: a1934d3ec61f95943b9d729f0d760d00, type: 2}
   - m_RefCount: 17
@@ -30953,10 +30955,10 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: a34f46d6f999ee34a8b08380af534f72, type: 2}
   - m_RefCount: 2
     m_Data: {fileID: 11400000, guid: 688b421f1fbc1694c972deedc18182a1, type: 2}
-  - m_RefCount: 6
+  - m_RefCount: 4
     m_Data: {fileID: 11400000, guid: 6e648a6a74a568c4a8b613131cda561b, type: 2}
   m_TileSpriteArray:
-  - m_RefCount: 22
+  - m_RefCount: 23
     m_Data: {fileID: 5441223297315994465, guid: 1e0d452429c860947a297c6b58d223af, type: 3}
   - m_RefCount: 16
     m_Data: {fileID: 65993916, guid: 1e0d452429c860947a297c6b58d223af, type: 3}
@@ -30992,7 +30994,7 @@ Tilemap:
     m_Data: {fileID: -722059767, guid: 1e0d452429c860947a297c6b58d223af, type: 3}
   - m_RefCount: 88
     m_Data: {fileID: 330561165, guid: 1e0d452429c860947a297c6b58d223af, type: 3}
-  - m_RefCount: 43
+  - m_RefCount: 42
     m_Data: {fileID: 1141823018, guid: 1e0d452429c860947a297c6b58d223af, type: 3}
   - m_RefCount: 99
     m_Data: {fileID: -511237044, guid: 1e0d452429c860947a297c6b58d223af, type: 3}
@@ -31016,15 +31018,15 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 2
+    m_Data: {fileID: 1317022547, guid: 1e0d452429c860947a297c6b58d223af, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 346406300, guid: 1e0d452429c860947a297c6b58d223af, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -1013130593, guid: 1e0d452429c860947a297c6b58d223af, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -1563599574, guid: 1e0d452429c860947a297c6b58d223af, type: 3}
-  - m_RefCount: 6
+  - m_RefCount: 4
     m_Data: {fileID: -292515681, guid: 1e0d452429c860947a297c6b58d223af, type: 3}
   - m_RefCount: 5
     m_Data: {fileID: -1511295634, guid: 1e0d452429c860947a297c6b58d223af, type: 3}
