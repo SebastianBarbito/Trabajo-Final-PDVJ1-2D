@@ -41,6 +41,12 @@ public class Minotaur_Jefe : MonoBehaviour
 
     void Update()
     {
+        if (player != null)
+        {
+            Player_Movement pm = player.GetComponent<Player_Movement>();
+            playerVivo = !pm.muerto;
+        }
+
         if (playerVivo && !muerto)
         {
             float distanceToPlayer = Vector2.Distance(transform.position, player.position);
@@ -66,7 +72,9 @@ public class Minotaur_Jefe : MonoBehaviour
         animator.SetBool("recibeDanio", recibiendoDanio);
         animator.SetBool("ataqueM_01", ataqueM_01);
         animator.SetBool("muerto", muerto);
+
     }
+
 
     private void Movimiento()
     {
@@ -170,9 +178,7 @@ public class Minotaur_Jefe : MonoBehaviour
 
     void RevisarFases()
     {
-        // -------------------------
         // FASE 2 (vida menor al 66%)
-        // -------------------------
         if (!cambioFase2 && vida <= (10 * 0.66f))
         {
             cambioFase2 = true;
@@ -187,9 +193,7 @@ public class Minotaur_Jefe : MonoBehaviour
             Debug.Log("FASE 2 ACTIVADA");
         }
 
-        // -------------------------
         // FASE 3 (vida menor al 33%)
-        // -------------------------
         if (!cambioFase3 && vida <= (10 * 0.33f))
         {
             cambioFase3 = true;

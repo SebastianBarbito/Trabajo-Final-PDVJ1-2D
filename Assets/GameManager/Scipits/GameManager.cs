@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class GameManager : MonoBehaviour  
 {
@@ -15,6 +16,14 @@ public class GameManager : MonoBehaviour
     public Button menuButton;
 
     private bool gameOverActivo = false;
+
+    public GameObject levelCompletedPanel;
+
+    public AudioClip audioGameOver;
+
+    public AudioClip audioLevelCompleted;
+
+    private AudioSource audioSource;
 
 
     void Awake()
@@ -31,6 +40,12 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
+        if (levelCompletedPanel != null)
+            levelCompletedPanel.SetActive(false);
+
+
         if (gameOverPanel != null)
         
              gameOverPanel.SetActive(false);
@@ -60,17 +75,57 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    public void GameOver()
+    public void GameOver(float delay = 2f)
     {
         if (gameOverActivo) return;
         gameOverActivo = true;
 
+        StartCoroutine(GameOverRoutine(delay));
+    }
+
+    private IEnumerator GameOverRoutine(float delay)
+    {
         if (gameOverPanel != null)
-        { 
             gameOverPanel.SetActive(true);
-        }
+        MusicController.Instance.StopMusic();
+
+        if (audioSource != null && audioGameOver != null)
+            audioSource.PlayOneShot(audioGameOver);
+
+        Time.timeScale = 0f;
+
+        yield return new WaitForSecondsRealtime(delay);
+    }
+
+    public void LevelCompleted(float delay = 2f)
+    {
+        StartCoroutine(LevelCompletedRoutine(delay));
+    }
+    private IEnumerator LevelCompletedRoutine(float delay)
+    {
+        // Mostrar UI
+        if (levelCompletedPanel != null)
+            levelCompletedPanel.SetActive(true);
+        MusicController.Instance.StopMusic();
+
+        // Reproducir sonido
+        if (audioSource != null && audioLevelCompleted != null)
+            audioSource.PlayOneShot(audioLevelCompleted);
+
+        Time.timeScale = 0f;
+
+        // Espera sin congelar el audio
+        yield return new WaitForSecondsRealtime(delay);
+
+        Time.timeScale = 1f;
+
+        // Pasar al siguiente nivel
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+
 
     }
+
+
     public void ReiniciarEscena()
     {
         Player_Movement.vidaActual = Player_Movement.MAX_VIDA;

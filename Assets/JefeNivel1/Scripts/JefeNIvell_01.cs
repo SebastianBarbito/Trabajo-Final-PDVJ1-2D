@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class JefeNIvell_01 : MonoBehaviour
 {
@@ -7,7 +8,7 @@ public class JefeNIvell_01 : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1 );
+            GameManager.Instance.LevelCompleted(3.5f);
         }
     }
 }

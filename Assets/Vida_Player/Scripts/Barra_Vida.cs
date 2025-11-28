@@ -9,11 +9,6 @@ public class Barra_Vida : MonoBehaviour
     //private Player_Movement playerController;
     private float vidaMaxima;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        //playerController = GameObject.Find("Player").GetComponent<Player_Movement>();
-        //vidaMaxima = Player_Movement.vidaActual;
-    }
 
     // Update is called once per frame
     void Update()
