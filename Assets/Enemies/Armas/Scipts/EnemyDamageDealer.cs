@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class EnemyWeapon : MonoBehaviour
 {
+
     public int damage = 1;           // Daño del arma
     public Transform owner;          // El enemigo dueño de esta arma
 
@@ -18,9 +19,6 @@ public class EnemyWeapon : MonoBehaviour
 
         Player_Movement player = collision.GetComponent<Player_Movement>();
         if (player == null) return;
-
-        Vector2 direccion = (player.transform.position - owner.position).normalized;
-
-        player.RecibeDanio(direccion, damage);
+        player.RecibeDanio(owner.position, damage);
     }
 }

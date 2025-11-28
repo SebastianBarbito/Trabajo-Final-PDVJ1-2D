@@ -41,27 +41,29 @@ public class EnemyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-            if (playerVivo && !muerto)
+        if (player != null)
+        {
+            Player_Movement pm = player.GetComponent<Player_Movement>();
+            playerVivo = !pm.muerto;
+        }
+
+        if (playerVivo && !muerto)
         {
             float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
-            // --- NUEVO: si está dentro del radio de ataque, ataca ---
             if (distanceToPlayer <= ataqueRadios)
-            {
                 Atacando();
-            }
             else
-            {
                 Movimiento();
-            }
         }
-
 
         animator.SetBool("enMovimiento", enMovimiento);
         animator.SetBool("recibeDanio", recibiendoDanio);
         animator.SetBool("ataqueM_01", ataqueM_01);
         animator.SetBool("muerto", muerto);
     }
+
+
     private void Movimiento()
     {
         if (recibiendoDanio || ataqueM_01) return; //no se mueve si ataca o recibe daño
@@ -106,7 +108,6 @@ public class EnemyMovement : MonoBehaviour
 
     public void Atacando()
     {
-        if (ataqueM_01 || recibiendoDanio) return; // evita repetir ataque o moverse dañado
 
         ataqueM_01 = true;
         enMovimiento = false;
@@ -131,6 +132,9 @@ public class EnemyMovement : MonoBehaviour
             {
                 enMovimiento = false;
                 finAtaque();
+
+                animator.SetBool("enMovimiento", false);
+                animator.SetBool("ataqueM_01", false);
             }
         }
 
@@ -175,6 +179,9 @@ public class EnemyMovement : MonoBehaviour
                 muerto = true;
                 enMovimiento = false;
                 ataqueM_01 =false;
+                animator.SetBool("muerto", true);
+                animator.SetBool("enMovimiento", false);
+
 
                 Invoke("EmilinarCuerpo", 4f);
             }

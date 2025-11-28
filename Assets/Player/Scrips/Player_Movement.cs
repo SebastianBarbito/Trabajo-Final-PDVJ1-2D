@@ -4,6 +4,13 @@ using System.Collections;
 
 public class Player_Movement : MonoBehaviour
 {
+    public PlayerSoundController soundController;
+    private IMovementStrategy moveStrategy;
+
+    private ICommand attackCommand;
+    private ICommand attack02Command;
+    private ICommand defendCommand;
+
     private bool petrificado = false;
     private SpriteRenderer sr;
     private Color colorOriginal;
@@ -21,7 +28,7 @@ public class Player_Movement : MonoBehaviour
     public LayerMask capSuelo;
 
     private bool enSuelo;
-    private bool recibiendoDanio;
+    public bool recibiendoDanio;
     private bool atacando;
     private bool atacando_02;
     public bool muerto;
@@ -31,6 +38,12 @@ public class Player_Movement : MonoBehaviour
 
     void Start()
     {
+        moveStrategy = new NormalMovement();
+
+        attackCommand = new AttackCommand();
+        attack02Command = new Attack02Command();
+        defendCommand = new DefendCommand();
+
         rb = GetComponent<Rigidbody2D>();
         vidaActual = GameManager.Instance.vidaJugador;
         sr = GetComponent<SpriteRenderer>();
@@ -46,59 +59,29 @@ public class Player_Movement : MonoBehaviour
             if (!atacando && !atacando_02 && !defensa && !petrificado)
             {
 
-                Movimiento();
+                moveStrategy.Move(this);
+            }
 
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, longitudRaycast, capSuelo);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, longitudRaycast, capSuelo);
                 enSuelo = hit.collider != null;
 
-                if (enSuelo && Input.GetKeyDown(KeyCode.Space) && !recibiendoDanio)
+                if (enSuelo && Input.GetKeyDown(KeyCode.Space) && !recibiendoDanio && !petrificado)
                 {
+                    soundController.playSaltar();
                     rb.AddForce(new Vector2(0f, fuerzaSalto), ForceMode2D.Impulse);
                 }
 
-            }
-
-            if (Input.GetKeyDown(KeyCode.K) && !atacando && enSuelo)
-            {
-                Atacando();
-            }
-
-            
-            if (Input.GetKeyDown(KeyCode.L) && !atacando_02 && enSuelo)
-            {
-                Atacando_02();
-            }
-            if (Input.GetKeyDown(KeyCode.J) && !defensa && enSuelo)
-            {
-                Defensa();
-            }
-        }
         
+
+            if (Input.GetKeyDown(KeyCode.K) && !petrificado) attackCommand.Execute(this);
+            if (Input.GetKeyDown(KeyCode.L) && !petrificado) attack02Command.Execute(this);
+            if (Input.GetKeyDown(KeyCode.J) && !petrificado) defendCommand.Execute(this);
+
+        }
+
 
         Animaciones();
 
-    }
-
-    public void Movimiento()
-    {
-        float velocidadX = Input.GetAxis("Horizontal") * Time.deltaTime * velocidad;
-
-        animator.SetFloat("Movement", velocidadX * velocidad);
-
-        if (velocidadX < 0)
-        {
-            transform.localScale = new Vector3(-1, 1, 1);
-        }
-        if (velocidadX > 0)
-        {
-            transform.localScale = new Vector3(1, 1, 1);
-        }
-
-        Vector3 posicion = transform.position;
-
-        if (!recibiendoDanio)
-
-            transform.position = new Vector3(posicion.x + velocidadX, posicion.y, posicion.z);
     }
 
     public void Animaciones()
@@ -140,21 +123,25 @@ public class Player_Movement : MonoBehaviour
 
         if (!recibiendoDanio)
         {
+            soundController.playRecibirDanio();
             recibiendoDanio = true;
             vidaActual -= cantDanio;
 
             if (vidaActual <= 0)
             {
                 muerto = true;
-                
+
                 StartCoroutine(RetrasoGameOver(3f));
             }
 
             if (!muerto)
             {
-                Vector2 rebote = new Vector2(direccion.x * 2, 1).normalized;
-                rb.AddForce(rebote * fuerzaRebote, ForceMode2D.Impulse);
+                // Rebote real alejando al jugador del enemigo
+                Vector2 direccionGolpe = (transform.position - (Vector3)direccion).normalized;
+                rb.AddForce(direccionGolpe * fuerzaRebote, ForceMode2D.Impulse);
+
                 StartCoroutine(BlockMovement(knockbackDuration));
+
             }
         }
     }
@@ -210,11 +197,9 @@ public class Player_Movement : MonoBehaviour
     }
 
     public void Atacando()
-    {
-        if (!petrificado)
-        {
-            atacando = true;
-        }
+    {   
+        soundController.playAtaque1();
+        atacando = true;
       
     }
 
@@ -225,9 +210,8 @@ public class Player_Movement : MonoBehaviour
 
     public void Atacando_02()
     {
-        if (!petrificado) { 
+       soundController.playAtaque2();
         atacando_02 = true;
-        }
     }
 
     public void DesactivaAtaque_02()
@@ -266,7 +250,7 @@ public class Player_Movement : MonoBehaviour
 
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.GameOver();
+            GameManager.Instance.GameOver(2f);
         }
     }
 

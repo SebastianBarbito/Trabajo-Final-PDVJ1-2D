@@ -5,7 +5,7 @@ public class Menu : MonoBehaviour
 {
     public void Jugar()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex +1);
+        SceneManager.LoadScene("Nivel_1");
     }
     public void Salir()
     {
@@ -15,6 +15,16 @@ public class Menu : MonoBehaviour
     public void Niveles()
     {
         SceneManager.LoadScene("Selector_Niveles");
+    }
+
+    public void MenuPrincipal()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
+    public void Creditos()
+    {
+        SceneManager.LoadScene("Creditos");
     }
 
 }

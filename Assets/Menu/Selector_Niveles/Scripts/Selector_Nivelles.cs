@@ -17,9 +17,4 @@ public class Selector_Nivelles : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene("Nivel_2");
     }
-    public void Nivel_3()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("Nivel_3");
-    }
 }

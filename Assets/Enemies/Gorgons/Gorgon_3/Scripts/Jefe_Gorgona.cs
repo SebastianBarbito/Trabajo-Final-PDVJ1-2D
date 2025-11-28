@@ -68,6 +68,11 @@ public class Jefe_Gorgona : MonoBehaviour
 
     void Update()
     {
+        if (player != null)
+        {
+            Player_Movement pm = player.GetComponent<Player_Movement>();
+            playerVivo = !pm.muerto;
+        }
 
         if (playerVivo && !muerto)
         {

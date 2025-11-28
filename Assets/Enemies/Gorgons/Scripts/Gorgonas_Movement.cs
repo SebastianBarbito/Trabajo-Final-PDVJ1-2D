@@ -46,6 +46,11 @@ public class Gorgonas_Movement : MonoBehaviour
 
     void Update()
     {
+        if (player != null)
+        {
+            Player_Movement pm = player.GetComponent<Player_Movement>();
+            playerVivo = !pm.muerto;
+        }
 
         if (playerVivo && !muerto)
         {
@@ -75,7 +80,9 @@ public class Gorgonas_Movement : MonoBehaviour
         animator.SetBool("ataque1", ataque1);
         animator.SetBool("ataque2", ataque2);
         animator.SetBool("muerto", muerto);
+
     }
+   
 
 
     private void Movimiento()
@@ -89,7 +96,6 @@ public class Gorgonas_Movement : MonoBehaviour
         {
             Vector2 direction = (player.position - transform.position).normalized;
 
-            // Evita que el normalizado genere (0,0) al estar demasiado cerca
             if (Mathf.Abs(direction.x) < 0.3f)
             {
                 direction.x = Mathf.Sign(player.position.x - transform.position.x);
